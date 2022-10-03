@@ -1,0 +1,54 @@
+import random
+
+subindo = []
+descendo = []
+lotacaoAtual = int()
+pessoasEmPe = 0
+pessoasSentadas = 0
+for paradas in range(1, 21):
+    pessoasSubindo = random.randint(0, 10)
+    pessoasDescendo = random.randint(0, 10)
+
+    if paradas <= 1:
+        pessoasDescendo = 0
+        lotacaoAtual = lotacaoAtual + pessoasSubindo
+    if paradas > 1:
+        if pessoasDescendo > lotacaoAtual:
+            pessoasDescendo = lotacaoAtual
+            lotacaoAtual = pessoasSubindo
+        else:
+            if paradas < 20:
+                lotacaoAtual = lotacaoAtual - pessoasDescendo
+                assentosSobrando = 60 - lotacaoAtual
+                if pessoasSubindo > assentosSobrando:
+                    pessoasSubindo = assentosSobrando
+
+                lotacaoAtual = lotacaoAtual + pessoasSubindo
+
+
+    if paradas >= 20:
+        pessoasSubindo = 0
+        pessoasDescendo = lotacaoAtual
+        lotacaoAtual = 0
+
+    subindo.append(pessoasSubindo)
+    descendo.append(pessoasDescendo)
+
+    if lotacaoAtual >= 40 :
+        pessoasSentadas = 40
+        pessoasEmPe = lotacaoAtual - pessoasSentadas
+    else :
+        pessoasSentadas = lotacaoAtual
+        pessoasEmPe = 0
+    print("-"*45)
+    print("Parada", paradas, "|", "Embarcaram:", pessoasSubindo, "|", "Desembarcaram:", pessoasDescendo, "|")
+    print("Pessoas sentadas: ", pessoasSentadas, " Pessoas em pé: ", pessoasEmPe)
+    if lotacaoAtual == 0 :
+        print("Onibus vazio")
+    elif lotacaoAtual == 60 :
+        print("Onibus cheio")
+    else :
+        print ("Lotacao atual: ", lotacaoAtual)
+    print ("-"*45)
+print("Embarcaram", sum(subindo), " e desembarcaram ", sum(descendo), "passageiros")
+print("_"*45)
